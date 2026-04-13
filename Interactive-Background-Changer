@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Vibes ✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      transition: background 0.8s ease;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 45px 35px;
+      width: 460px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #fff, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
+    }
+
+    .btn {
+      padding: 12px 24px;
+      margin: 6px 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-apply {
+      background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+      color: white;
+      padding: 14px 35px;
+      font-size: 1.1rem;
+    }
+
+    .btn-random {
+      background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+      color: #333;
+    }
+
+    .color-btn {
+      background: rgba(255,255,255,0.25);
+      color: white;
+      font-weight: 500;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .color-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 25px 0;
+    }
+
+    .info {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Color Vibes ✨</h1>
+    <p>Type or click any color below</p>
+    
+    <input type="text" id="colorInput" placeholder="red, #00ff88, cyan..." autofocus>
+
+    <div>
+      <button class="btn btn-apply" onclick="applyColor()">Apply Color</button>
+      <button class="btn btn-random" onclick="randomColor()">🎲 Random</button>
+    </div>
+
+    <!-- Popular Color Buttons -->
+    <div class="color-grid" id="colorButtons">
+      <!-- Buttons will be added by JavaScript -->
+    </div>
+
+    <div class="info">
+      Live preview • Click any button to change instantly
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('colorInput');
+    const popularColors = [
+      {name: "Red", value: "#ff4757"},
+      {name: "Blue", value: "#3742fa"},
+      {name: "Green", value: "#2ed573"},
+      {name: "Purple", value: "#8e44ad"},
+      {name: "Pink", value: "#ff6b9d"},
+      {name: "Orange", value: "#ffa502"},
+      {name: "Cyan", value: "#00d2d3"},
+      {name: "Yellow", value: "#f1c40f"},
+      {name: "Lime", value: "#7bed9f"},
+      {name: "Teal", value: "#1abc9c"},
+      {name: "Coral", value: "#ff7f50"},
+      {name: "Violet", value: "#9b59b6"}
+    ];
+
+    // Create popular color buttons
+    function createColorButtons() {
+      const container = document.getElementById('colorButtons');
+      popularColors.forEach(color => {
+        const btn = document.createElement('button');
+        btn.className = 'btn color-btn';
+        btn.textContent = color.name;
+        btn.style.backgroundColor = color.value;
+        btn.onclick = () => {
+          input.value = color.value;
+          document.body.style.background = color.value;
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function applyColor() {
+      let color = input.value.trim();
+      if (color === "") return;
+      document.body.style.background = color;
+    }
+
+    function randomColor() {
+      const randomHex = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+      input.value = randomHex;
+      document.body.style.background = randomHex;
+    }
+
+    // Live preview while typing
+    input.addEventListener('input', () => {
+      const color = input.value.trim();
+      if (color.length > 2) {
+        document.body.style.background = color;
+      }
+    });
+
+    // Press Enter
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') applyColor();
+    });
+
+    // Initialize
+    createColorButtons();
+  </script>
+</body>
+</html>
