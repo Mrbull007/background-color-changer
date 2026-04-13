@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Color Changer</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      transition: background-color 0.5s ease;
+    }
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      padding: 12px;
+      font-size: 18px;
+      width: 250px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+    p {
+      margin-top: 20px;
+      color: #555;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Background Color Changer</h1>
+    <input type="text" id="colorInput" placeholder="Type color name (e.g. red, blue, #00ff00)">
+    <br>
+    <button onclick="changeBackground()">Change Background</button>
+    <p>Press Enter in the box or click the button</p>
+  </div>
+
+  <script>
+    function changeBackground() {
+      const color = document.getElementById('colorInput').value.trim();
+      
+      if (color === "") {
+        alert("Please enter a color name or hex code!");
+        return;
+      }
+
+      // Change the background color
+      document.body.style.backgroundColor = color;
+    }
+
+    // Allow pressing Enter key
+    document.getElementById('colorInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        changeBackground();
+      }
+    });
+  </script>
+</body>
+</html>
