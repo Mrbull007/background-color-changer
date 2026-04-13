@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Vibes ✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.8s ease;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 50px 40px;
+      width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #fff, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6);
+    }
+
+    .btn {
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+      color: #333;
+      transition: all 0.4s;
+      margin-bottom: 25px;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Selected Color Display Box */
+    #colorDisplay {
+      margin-top: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.4);
+      display: none; /* Hidden initially */
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .color-box {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 2px solid white;
+    }
+
+    .info {
+      margin-top: 25px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Color Vibes ✨</h1>
+    <p>Type or click Random to change background</p>
+    
+    <input type="text" id="colorInput" placeholder="red, #00ff88, cyan..." autofocus>
+
+    <button class="btn" onclick="randomColor()">🎲 Random Color</button>
+
+    <!-- Selected Color Display -->
+    <div id="colorDisplay">
+      <div class="color-box" id="smallColorBox"></div>
+      <span id="colorName"></span>
+    </div>
+
+    <div class="info">
+      Live preview enabled • Random button picks beautiful colors
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('colorInput');
+    const colorDisplay = document.getElementById('colorDisplay');
+    const colorName = document.getElementById('colorName');
+    const smallColorBox = document.getElementById('smallColorBox');
+
+    function randomColor() {
+      // Generate beautiful random hex color
+      const randomHex = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+      
+      // Change background
+      document.body.style.background = randomHex;
+      
+      // Show the result in the new box
+      input.value = randomHex;
+      smallColorBox.style.backgroundColor = randomHex;
+      colorName.textContent = randomHex.toUpperCase();
+      colorDisplay.style.display = 'flex';
+    }
+
+    // Live preview while typing
+    input.addEventListener('input', () => {
+      const color = input.value.trim();
+      if (color.length > 2) {
+        document.body.style.background = color;
+        
+        // Hide the random result box when user types manually
+        colorDisplay.style.display = 'none';
+      }
+    });
+
+    // Press Enter key
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const color = input.value.trim();
+        if (color) {
+          document.body.style.background = color;
+          colorDisplay.style.display = 'none';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
